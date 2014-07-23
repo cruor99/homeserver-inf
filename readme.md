@@ -1,5 +1,10 @@
-This is the repository for the web interface of my homeserver setup
-===================================================================
+Local network web interface for media center
+============================================
+
+In order to use this web interface, a mimicked setup to this is required.
+The preferred linux distribution is up to you, but for my setup I used 
+Ubuntu.
+
 
 The local Free software used is:
 --------------------------------
