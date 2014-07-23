@@ -7,6 +7,7 @@ The local Free software used is:
 >- mpd,
 >- livestreamer,
 >- mplayer
+
 All available through the normal ubuntu repositories
 
 The Dependencies:
