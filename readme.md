@@ -2,8 +2,7 @@ Local network web interface for media center
 ============================================
 
 In order to use this web interface, a mimicked setup to this is required.
-The preferred linux distribution is up to you, but for my setup I used 
-Ubuntu.
+The preferred linux distribution is up to you.
 
 
 The local Free software used is:
