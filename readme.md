@@ -18,4 +18,6 @@ The Dependencies:
 -----------------
 >- Python 2.7
 >- Flask
+>- SQLalchemy
+>- Sqlite3
 
