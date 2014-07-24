@@ -1,0 +1,40 @@
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="static/style.css" />
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    {% if title %}
+    <title>{{title}} - Homeserver Interface</title>
+    {% else %}
+    <title>Homeserver Interface</title>
+    {% endif %}
+  </head>
+  <body>
+    <div class="div-nav">
+        <nav>
+            <ul class="sf-menu">
+                <li><a href="{{ url_for('index') }}" class="menu-link">Hjem</a></li>
+            {% if 'logged_in' in session %}
+            <li> <a href="{{ url_for('logout') }}" class="menu-link">Logg ut</a></li>
+            {% else %}
+                <li> <a href="{{ url_for('login') }}" class="menu-link">Logg inn</a></li>
+                <li> <a href="{{ url_for('signup') }}" class="menu-link">Registrer</a></li>
+            {% endif %}
+            </ul>
+        </nav>
+    </div>
+
+    <hr>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul>
+    {% for message in messages %}
+        <li>{{ message }} </li>
+    {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+  <div class="content-box">
+    {% block content %}{% endblock %}
+  </div>
+  </body>
+</html>
