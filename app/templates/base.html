@@ -1,6 +1,8 @@
 <html>
   <head>
-    <link rel="stylesheet" type="text/css" href="static/style.css" />
+    <link rel="stylesheet" type="text/css" href="static/css/bootstrap.css" />
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     {% if title %}
     <title>{{title}} - Homeserver Interface</title>
@@ -11,7 +13,7 @@
   <body>
     <div class="div-nav">
         <nav>
-            <ul class="sf-menu">
+            <ul class="list-inline">
                 <li><a href="{{ url_for('index') }}" class="menu-link">Hjem</a></li>
             {% if 'logged_in' in session %}
             <li> <a href="{{ url_for('logout') }}" class="menu-link">Logg ut</a></li>
@@ -33,7 +35,7 @@
     </ul>
     {% endif %}
     {% endwith %}
-  <div class="content-box">
+  <div class="container">
     {% block content %}{% endblock %}
   </div>
   </body>
