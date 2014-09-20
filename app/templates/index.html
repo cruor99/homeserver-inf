@@ -1,9 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title></title>
-</head>
-<body>
-THIS IS THE HOME PAGE
-</body>
-</html>
+{% extends "base.html" %}
+{% block content %}
+
+<form method="POST" action="">
+  <input type="TEXT" name=streamlink id=streamlink placeholder="streamlink">
+  <input type=submit name=submit>
+</form>
+ {% endblock %}

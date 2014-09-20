@@ -2,6 +2,7 @@ from flask import *
 from flask.ext.login import logout_user
 from app import app, db
 from models import User
+import subprocess
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
@@ -42,6 +43,10 @@ def signup():
 @app.route('/index', methods=['POST', 'GET'])
 @app.route('/', methods=['POST', 'GET'])
 def index():
+    if request.method == 'POST':
+        stream = request.form['streamlink']
+        subprocess.call(["livestreamer", stream, "best", "-p", "vlc -f"])
+        flash("Stream: " + stream + " started")
     return render_template('index.html')
 
 @app.route('/logout', methods=['POST', 'GET'])
