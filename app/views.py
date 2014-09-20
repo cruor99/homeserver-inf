@@ -43,10 +43,15 @@ def signup():
 @app.route('/index', methods=['POST', 'GET'])
 @app.route('/', methods=['POST', 'GET'])
 def index():
-    if request.method == 'POST':
+    if request.method == 'POST' and request.form['submit'] == "Start Stream":
+        subprocess.call(["pkill", "vlc"])
         stream = request.form['streamlink']
         subprocess.call(["livestreamer", stream, "best", "-p", "vlc -f"])
         flash("Stream: " + stream + " started")
+    if request.method == "POST" and request.form["submit"] == "Kill vlc":
+        subprocess.call(["pkill", "vlc"])
+        flash("VLC stopped")
+        
     return render_template('index.html')
 
 @app.route('/logout', methods=['POST', 'GET'])
