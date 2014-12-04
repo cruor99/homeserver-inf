@@ -84,8 +84,9 @@ def video():
     item = request.args.get('p')
     print item
     print type(item)
+    extensions = ['.mp4', '.m4v','.mkv','.avi']
     if item is not None:
-        if item.endswith('.m4v'):
+        if item.endswith(tuple(extensions)):
             thr = Thread(target = startVideo(str(item)))
             flash('Video started')
             thr.start()
