@@ -4,6 +4,9 @@ from app import app, db
 from models import User
 import subprocess
 import os
+from threading import Thread
+
+subprocess.call(['export DISPLAY=:0.0'], shell=True)
 
 def make_tree(path):
     tree = dict(name=path, children=[])
@@ -61,12 +64,20 @@ def index():
     if request.method == 'POST' and request.form['submit'] == "Start Stream":
         subprocess.call(["pkill", "vlc"])
         stream = request.form['streamlink']
-        subprocess.call(["livestreamer", stream, "best", "-p", "vlc -f"])
+        thr = Thread(target = startStream, args = stream)
+        thr.start()
         flash("Stream: " + stream + " started")
     if request.method == "POST" and request.form["submit"] == "Kill vlc":
         subprocess.call(["pkill", "vlc"])
         flash("VLC stopped")
     return render_template('index.html')
+
+def startStream(stream):
+    subprocess.call(["livestreamer", stream, "best", "-p", "vlc -f"])
+
+def startVideo(video):
+    subprocess.call(['vlc', '-f', video])
+    print video
 
 @app.route('/videos', methods=['POST', 'GET'])
 def video():
@@ -75,7 +86,10 @@ def video():
     print type(item)
     if item is not None:
         if item.endswith('.m4v'):
-            subprocess.call(['vlc', '-f',item])
+            thr = Thread(target = startVideo(str(item)))
+            flash('Video started')
+            thr.start()
+            return redirect('/')
         else:
             webtree = make_tree(item)
     else:
