@@ -3,6 +3,21 @@ from flask.ext.login import logout_user
 from app import app, db
 from models import User
 import subprocess
+import os
+
+def make_tree(path):
+    tree = dict(name=path, children=[])
+    try: lst = os.listdir(path)
+    except OSError:
+        pass
+    else:
+        for name in lst:
+            fn = os.path.join(path, name)
+            if os.path.isdir(fn):
+                tree['children'].append(make_tree(fn))
+            else:
+                tree['children'].append(dict(name=fn))
+    return tree
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
@@ -51,13 +66,26 @@ def index():
     if request.method == "POST" and request.form["submit"] == "Kill vlc":
         subprocess.call(["pkill", "vlc"])
         flash("VLC stopped")
-        
     return render_template('index.html')
 
-@app.route('/logout', methods=['POST', 'GET'])
+@app.route('/videos', methods=['POST', 'GET'])
+def video():
+    item = request.args.get('p')
+    print item
+    print type(item)
+    if item is not None:
+        if item.endswith('.m4v'):
+            subprocess.call(['vlc', '-f',item])
+        else:
+            webtree = make_tree(item)
+    else:
+        webtree = make_tree('/home/liknesserver/Videos/')
+    return render_template('videos.html', webtree = webtree)
+
+@app.route('/logout', methods=['post', 'get'])
 def logout():
     logout_user()
-    session.pop('logged_in', None)
-    session.pop('username', None)
-    session.pop('usermail', None)
+    session.pop('logged_in', none)
+    session.pop('username', none)
+    session.pop('usermail', none)
     return redirect(url_for('login'))

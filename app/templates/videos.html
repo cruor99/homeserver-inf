@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block content %}
+<form action='' method='POST'>
+    {% for item in webtree['children'] %}
+    </br> <a href="/videos?p={{ item['name'] }}">{{ item['name'] }}</a>
+    {% endfor %}
+</form>
+{% endblock %}

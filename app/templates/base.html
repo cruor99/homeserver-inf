@@ -15,6 +15,7 @@
         <nav>
             <ul class="list-inline">
                 <li><a href="{{ url_for('index') }}" class="menu-link">Hjem</a></li>
+                <li><a href="{{ url_for('video') }}" class="menu-link">Video</a></li>
             {% if 'logged_in' in session %}
             <li> <a href="{{ url_for('logout') }}" class="menu-link">Logg ut</a></li>
             {% else %}
