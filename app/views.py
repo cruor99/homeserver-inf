@@ -87,7 +87,7 @@ def video():
     extensions = ['.mp4', '.m4v','.mkv','.avi']
     if item is not None:
         if item.endswith(tuple(extensions)):
-            thr = Thread(target = startVideo(str(item)))
+            thr = Thread(target = startVideo, args=(str(item),))
             flash('Video started')
             thr.start()
             return redirect('/')
