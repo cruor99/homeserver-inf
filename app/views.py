@@ -22,6 +22,10 @@ def make_tree(path):
                 tree['children'].append(dict(name=fn))
     return tree
 
+def playpause():
+    print "test"
+    subprocess.call("./playpause.sh")
+
 @app.route('/login', methods=['POST', 'GET'])
 def login():
     if request.method == 'POST':
@@ -61,15 +65,23 @@ def signup():
 @app.route('/index', methods=['POST', 'GET'])
 @app.route('/', methods=['POST', 'GET'])
 def index():
+    if request.method == "POST" and request.form["submit"] == "playpause":
+        playpause()
     if request.method == 'POST' and request.form['submit'] == "Start Stream":
         subprocess.call(["pkill", "vlc"])
         stream = request.form['streamlink']
-        thr = Thread(target = startStream, args = stream)
+        thr = Thread(target = startStream, args = (str(stream),))
         thr.start()
         flash("Stream: " + stream + " started")
+    if request.method == "POST" and request.form["submit"] == "Youtube":
+        thr = Thread(target = startVideo, args = (str(request.form['streamlink']),))
+        thr.start()
+        flash("Youtube clip: " + str(request.form['streamlink']) + " started")
+        return render_template('index.html')
     if request.method == "POST" and request.form["submit"] == "Kill vlc":
         subprocess.call(["pkill", "vlc"])
         flash("VLC stopped")
+
     return render_template('index.html')
 
 def startStream(stream):
